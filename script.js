@@ -163,7 +163,8 @@ function update(){
         platformsGroup.destroy(true);
         heightText.destroy(true);
         versionCount.destroy(true);
-        reset();
+        game.add.button
+        
 
     }
 
@@ -182,7 +183,7 @@ function reset(){
        platform.body.immovable = true;
     }
     
-    versionCount = game.add.text(430,20, "v0.2.0", {
+    versionCount = game.add.text(430,20, "v0.2.1", {
         font: 'bold 21px',
         fill: '#000000'
     });
