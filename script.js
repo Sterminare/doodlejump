@@ -14,6 +14,7 @@ var platform;
 var platformsGroup;
 var moveOffset;
 var gameOver;
+var verison = 'v0.2.1'
 
 var maxPlayerHeight = -400;
 
@@ -51,7 +52,7 @@ function create(){
         platform.body.immovable = true;
     }
 
-    versionCount = game.add.text(430,20, "v0.2.0", {
+    versionCount = game.add.text(430,20, version, {
         font: 'bold 21px',
         fill: '#000000'
     });
@@ -183,7 +184,7 @@ function reset(){
        platform.body.immovable = true;
     }
     
-    versionCount = game.add.text(430,20, "v0.2.1", {
+    versionCount = game.add.text(430,20, version, {
         font: 'bold 21px',
         fill: '#000000'
     });
