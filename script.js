@@ -13,6 +13,7 @@ var player;
 var platform;
 var platformsGroup;
 var moveOffset;
+var gameOver;
 
 var maxPlayerHeight = -400;
 
@@ -56,7 +57,7 @@ function create(){
     });
     versionCount.fixedToCamera = true;
 
-    heightText = game.add.text(20, 20, "Meters", {
+    heightText = game.add.text(20, 20, "Score: 0", {
         font: 'bold 21px',
         fill: '#000000'
     });
@@ -115,6 +116,7 @@ function update(){
     //Kill the player if it drops below the camera
     if(player.body.y >= game.camera.y+500){
         player.kill();
+        gameOver = true;
     }
 
     //Remove platforms that are below the camera
@@ -126,7 +128,7 @@ function update(){
     }
 
     //When the highest platform is near the top of camera, generate a new platform between 0 and 150 pixels above it
-    if(platformsGroup.children[platformsGroup.children.length-1].y >= game.camera.y - 100){
+    if(platformsGroup.children != [] && platformsGroup.children[platformsGroup.children.length-1].y >= game.camera.y - 100){
         platform = game.add.sprite(((Math.random() * 360)+ 10),platformsGroup.children[platformsGroup.children.length-1].y-((Math.random() * 100) + 50), 'platform');
         platformsGroup.add(platform);
         platform.body.immovable = true;
@@ -157,9 +159,52 @@ function update(){
     maxPlayerHeight = Math.round(-1*(player.y));
     }
 
+    if(gameOver == true){
+        platformsGroup.destroy(true);
+        heightText.destroy(true);
+        versionCount.destroy(true);
+        reset();
 
+    }
 
 }
+
+function reset(){
+    platformsGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
+    //generate starting platforms
+    platform = game.add.sprite(100, 400, 'platform');
+    platformsGroup.add(platform);
+    platform.body.immovable = true;
+
+   for (var i = 0; i < 6; i++) {
+       platform = game.add.sprite(((Math.random() * 400)+ 50),platformsGroup.children[platformsGroup.children.length-1].y-((Math.random() * 100) + 50), 'platform');
+       platformsGroup.add(platform);
+       platform.body.immovable = true;
+    }
+    
+    versionCount = game.add.text(430,20, "v0.2.0", {
+        font: 'bold 21px',
+        fill: '#000000'
+    });
+    versionCount.fixedToCamera = true;
+
+    heightText = game.add.text(20, 20, "Score: 0", {
+        font: 'bold 21px',
+        fill: '#000000'
+    });
+    heightText.fixedToCamera = true;
+    heightText.cameraOffset.setTo(20,20);
+  
+    player.revive();
+    player.body.x = 100;
+    player.body.y = 300;
+
+    game.world.setBounds(0, player.y - 500, 500, 1000);
+    game.camera.y = 0;
+
+    gameOver = false;
+}
+
 
 function render(){
 
