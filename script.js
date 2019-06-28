@@ -14,7 +14,7 @@ var platform;
 var platformsGroup;
 var moveOffset;
 var gameOver;
-var verison = 'v0.2.1'
+var version = 'v0.2.1';
 
 var maxPlayerHeight = -400;
 
