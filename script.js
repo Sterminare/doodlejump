@@ -30,6 +30,7 @@ function preload(){
     game.load.image('player','Assets/player.png');
     game.load.image('playerJump','Assets/playerJump.png');
     game.load.image('platformMove','Assets/platformMove.png');
+    game.load.image('gameOverScreen','Assets/gameOverScreen.png');
     game.stage.backgroundColor = '#EFEFEF';
 }
 
@@ -129,7 +130,7 @@ function update(){
     }
 
     //When the highest platform is near the top of camera, generate a new platform between 0 and 150 pixels above it
-    if(platformsGroup.children != [] && platformsGroup.children[platformsGroup.children.length-1].y >= game.camera.y - 100){
+    if(typeof platformsGroup.children[platformsGroup.children.length-1] != 'undefined' && platformsGroup.children[platformsGroup.children.length-1].y >= game.camera.y - 100){
         platform = game.add.sprite(((Math.random() * 360)+ 10),platformsGroup.children[platformsGroup.children.length-1].y-((Math.random() * 100) + 50), 'platform');
         platformsGroup.add(platform);
         platform.body.immovable = true;
@@ -160,18 +161,23 @@ function update(){
     maxPlayerHeight = Math.round(-1*(player.y));
     }
 
+    //Do this when the player dies
     if(gameOver == true){
         platformsGroup.destroy(true);
         heightText.destroy(true);
         versionCount.destroy(true);
-        game.add.button
-        
+       // gameOverButton = game.add.button(game.camera.x,game.camera.y, 'gameOverScreen', reset, this);
+       reset();
 
     }
 
 }
 
 function reset(){
+    console.log('resetting');
+    
+    //gameOverButton.destroy();
+    
     platformsGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
     //generate starting platforms
     platform = game.add.sprite(100, 400, 'platform');
